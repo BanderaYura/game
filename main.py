@@ -115,6 +115,7 @@ font3 = font.SysFont("Impact",33)
 result = font2.render('Ти програв',True,(0,255,0))
 count_text = font1.render('0',True,(0,255,0))
 chance = font3.render('Щоб грати дальше ,нажміть "2",але майте на увазі,всі очки обнуляться',True,(0,255,0))
+
 while run:
     for e in event.get():
         if e.type == QUIT:
@@ -130,6 +131,7 @@ while run:
     rand_num = randint(0,100)
     if rand_num == 70:
         kakts.add(Kakt())
+
     collide = sprite.spritecollideany(player,kakts)
     if collide:
         game = False
@@ -149,9 +151,9 @@ while run:
         if keys [K_2]:
             game = True
             points = 0
+            kakts = sprite.Group()
         count_text = font1.render(str(points),True,(0,255,0))
     window.blit(count_text,(30,30))
-
 
 
 
