@@ -30,18 +30,19 @@ class Player(GameSpirite):
     def __init__(self):
         super().__init__("player.png",500,groundlvl - 75,75,75)
         self.speed_y = 10
-        self.jump_speed = 30
-        self.speed = 15
+        self.jump_speed = 23
+        self.speed = 12
         self.onground = True
-        self.wh = 5
-        self.gravity = 1
+        self.wh = 4
+        self.gravity = 0.2
         self.jumpcount = 0
 
     def jump (self):
-        self.rect.y -= self.jump_speed
-        self.onground = False
-        self.gravity = 0
-        self.speed_y = 5
+        if self.rect.y > 270:
+            self.rect.y -= self.jump_speed
+            self.onground = False
+            self.gravity = 0
+            self.speed_y = 5
         
 
         
@@ -58,10 +59,12 @@ class Player(GameSpirite):
             #self.rect.y -= self.jump_speed
         #if keys [K_DOWN]:
             #self.rect.y += self.jump_speed
-        if self.wh == 0:
+        if self.wh <= 0:
             player.rect.y = 570
+            self.wh == 4
         if not self.onground:
-            self.gravity += 1
+            #self.gravity += 0.2
+            #self.speed_y += 0.2
             self.rect.y += self.speed_y + self.gravity
         if self.rect.y >= 570:
             self.onground = True
@@ -106,9 +109,12 @@ player = Player()
 points = 0
 kakts = sprite.Group()
 
-font1 = font.SysFont("Impact",50)
-result = font1.render('Ти програв',True,(0,255,0))
+font1 = font.SysFont("Impact",70)
+font2 = font.SysFont("Impact",50)
+font3 = font.SysFont("Impact",33)
+result = font2.render('Ти програв',True,(0,255,0))
 count_text = font1.render('0',True,(0,255,0))
+chance = font3.render('Щоб грати дальше ,нажміть "2",але майте на увазі,всі очки обнуляться',True,(0,255,0))
 while run:
     for e in event.get():
         if e.type == QUIT:
@@ -137,8 +143,13 @@ while run:
         kakts.update()
         kakts.draw(window)
     else:
-        window.blit(result, (300,300))
-
+        window.blit(result, (470,150))
+        window.blit(chance,(90,220))
+        keys = key.get_pressed()
+        if keys [K_2]:
+            game = True
+            points = 0
+        count_text = font1.render(str(points),True,(0,255,0))
     window.blit(count_text,(30,30))
 
 
